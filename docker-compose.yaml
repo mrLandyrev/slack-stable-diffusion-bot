@@ -1,0 +1,24 @@
+version: '3'
+services:
+  webhook:
+    build:
+      dockerfile: Dockerfile.webhook
+    ports: 
+    - 8080:8080
+    depends_on:
+    - rabbit
+    restart: on-failure
+  creator:
+    build:
+      dockerfile: Dockerfile.creator
+    depends_on:
+    - rabbit
+    restart: on-failure
+  sender:
+    build:
+      dockerfile: Dockerfile.sender
+    depends_on:
+    - rabbit
+    restart: on-failure
+  rabbit:
+    image: rabbitmq
